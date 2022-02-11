@@ -106,9 +106,15 @@ Overridable Methods
 Here are all of the methods that you can override. All of the context possibilities are supported.
 
 beforeInsert()
+  
 beforeUpdate()
+  
 beforeDelete()
+  
 afterInsert()
+  
 afterUpdate()
+  
 afterDelete()
+  
 afterUndelete()
