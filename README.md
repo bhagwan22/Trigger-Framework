@@ -12,12 +12,10 @@ But the most important part of this framework is that it's minimal and simple to
 
 
 
-**Usage**
-
+Usage
 To create a trigger handler, you simply need to create a class that inherits from TriggerHandler.cls. Here is an example for creating an Opportunity trigger handler.
 
 public class OpportunityTriggerHandler extends TriggerHandler {
-
 In your trigger handler, to add logic to any of the trigger contexts, you only need to override them in your trigger handler. Here is how we would add logic to a beforeUpdate trigger.
 
 public class OpportunityTriggerHandler extends TriggerHandler {
@@ -31,6 +29,7 @@ public class OpportunityTriggerHandler extends TriggerHandler {
   // add overrides for other contexts
 
 }
+
 Note: When referencing the Trigger statics within a class, SObjects are returned versus SObject subclasses like Opportunity, Account, etc. This means that you must cast when you reference them in your trigger handler. You could do this in your constructor if you wanted.
 
 public class OpportunityTriggerHandler extends TriggerHandler {
