@@ -13,6 +13,7 @@ But the most important part of this framework is that it's minimal and simple to
 
 
 **Usage**
+
 To create a trigger handler, you simply need to create a class that inherits from TriggerHandler.cls. Here is an example for creating an Opportunity trigger handler.
 
 public class OpportunityTriggerHandler extends TriggerHandler {
