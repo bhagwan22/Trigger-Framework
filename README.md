@@ -10,14 +10,13 @@ The base class also provides a secondary role as a supervisor for Trigger execut
 
 But the most important part of this framework is that it's minimal and simple to use.
 
-Deploy to SFDX Scratch Org: Deploy
 
-Deploy to Salesforce Org: Deploy
 
-Usage
+**Usage**
 To create a trigger handler, you simply need to create a class that inherits from TriggerHandler.cls. Here is an example for creating an Opportunity trigger handler.
 
 public class OpportunityTriggerHandler extends TriggerHandler {
+
 In your trigger handler, to add logic to any of the trigger contexts, you only need to override them in your trigger handler. Here is how we would add logic to a beforeUpdate trigger.
 
 public class OpportunityTriggerHandler extends TriggerHandler {
