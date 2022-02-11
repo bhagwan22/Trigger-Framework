@@ -11,20 +11,20 @@ But the most important part of this framework is that it's minimal and simple to
 # Usage
 To create a trigger handler, you simply need to create a class that inherits from TriggerHandler.cls. Here is an example for creating an Opportunity trigger handler.
 
-public class OpportunityTriggerHandler extends TriggerHandler {
+      public class OpportunityTriggerHandler extends TriggerHandler {
 
 In your trigger handler, to add logic to any of the trigger contexts, you only need to override them in your trigger handler. Here is how we would add logic to a beforeUpdate trigger.
 public class OpportunityTriggerHandler extends TriggerHandler {
   
-  public override void beforeUpdate() {
-    for(Opportunity o : (List<Opportunity>) Trigger.new) {
-      // do something
-    }
-  }
+      public override void beforeUpdate() {
+        for(Opportunity o : (List<Opportunity>) Trigger.new) {
+          // do something
+        }
+      }
 
-  // add overrides for other contexts
+      // add overrides for other contexts
 
-}
+      }
 
 **Note:** When referencing the Trigger statics within a class, SObjects are returned versus SObject subclasses like Opportunity, Account, etc. This means that you must cast when you reference them in your trigger handler. You could do this in your constructor if you wanted.
   
@@ -51,5 +51,53 @@ To use the trigger handler, you only need to construct an instance of your trigg
 # Cool stuf
  ## Max Loop Count
   
+To prevent recursion, you can set a max loop count for Trigger Handler. If this max is exceeded, and exception will be thrown. A great use case is when you want to ensure that your trigger runs once and only once within a single execution. Example:
   
+      public class OpportunityTriggerHandler extends TriggerHandler {
+
+        public OpportunityTriggerHandler() {
+          this.setMaxLoopCount(1);
+        }
+
+        public override void afterUpdate() {
+          List<Opportunity> opps = [SELECT Id FROM Opportunity WHERE Id IN :Trigger.newMap.keySet()];
+          update opps; // this will throw after this update
+        }
+
+      }
+  
+# Bypass API
+What if you want to tell other trigger handlers to halt execution? That's easy with the bypass api:
+
+      public class OpportunityTriggerHandler extends TriggerHandler {
+
+        public override void afterUpdate() {
+          List<Opportunity> opps = [SELECT Id, AccountId FROM Opportunity WHERE Id IN :Trigger.newMap.keySet()];
+
+          Account acc = [SELECT Id, Name FROM Account WHERE Id = :opps.get(0).AccountId];
+
+          TriggerHandler.bypass('AccountTriggerHandler');
+
+          acc.Name = 'No Trigger';
+          update acc; // won't invoke the AccountTriggerHandler
+
+          TriggerHandler.clearBypass('AccountTriggerHandler');
+
+          acc.Name = 'With Trigger';
+          update acc; // will invoke the AccountTriggerHandler
+
+        }
+
+      }
+  
+ If you need to check if a handler is bypassed, use the isBypassed method:
+ 
+      if (TriggerHandler.isBypassed('AccountTriggerHandler')) {
+        // ... do something if the Account trigger handler is bypassed!
+      }
+
+
+ 
+
+
   
