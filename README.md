@@ -97,7 +97,30 @@ What if you want to tell other trigger handlers to halt execution? That's easy w
       }
 
 
- 
+If you want to clear all bypasses for the transaction, simple use the clearAllBypasses method, as in: 
 
+            // ... done with bypasses!
+
+            TriggerHandler.clearAllBypasses();
+
+            // ... now handlers won't be ignored!
+
+# Overridable Methods
+
+Here are all of the methods that you can override. All of the context possibilities are supported.
+
+      beforeInsert()
+
+      beforeUpdate()
+
+      beforeDelete()
+
+      afterInsert()
+
+      afterUpdate()
+
+      afterDelete()
+
+      afterUndelete()
 
   
