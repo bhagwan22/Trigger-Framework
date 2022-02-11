@@ -43,11 +43,11 @@ public class OpportunityTriggerHandler extends TriggerHandler {
 }
 
 To use the trigger handler, you only need to construct an instance of your trigger handler within the trigger handler itself and call the _**run()**_ method. Here is an example of the Opportunity trigger.  
-  
+<div class="highlight highlight-source-java position-relative overflow-auto" >
 trigger OpportunityTrigger on Opportunity (before insert, before update) {
   new OpportunityTriggerHandler().run();
 }  
-
+  </div>
 # Cool stuf
  ## Max Loop Count
   
